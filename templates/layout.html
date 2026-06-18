@@ -1,25 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}My Portfolio{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Danny Benish{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Varela+Round&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/projects/">Projects</a>
-        </nav>
-    </header>
+    <div class="container">
+        <header class="top-accent"></header>
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="logo-list">
+                    <div class="logo">Danny Benish</div>
+                    <div class="sublogo">i write code please hire me</div>
+                </div>
+                <nav>
+                    <ul style="display: flex; list-style: none;">
+                        <li><a href="/">About</a></li>
+                        <li><a href="/projects/">Projects</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
 
-    <main>
-        {% block body %}{% endblock %}
-    </main>
+        <main>
+            <!-- The specific content of each page will go here -->
+            {% block content %}{% endblock %}
+        </main>
 
-    <footer>
-        <p>&copy; {{ today().year }} My Name</p>
-    </footer>
+        <footer>
+            <div class="footer-links">
+                <p>Contact Me: </p>
+                <a href="mailto:dannybb554@gmail.com">Email</a>
+                <a href="https://github.com/dannyb33" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/daniel-benish/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>

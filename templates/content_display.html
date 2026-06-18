@@ -1,12 +1,10 @@
 {% extends "layout.html" %}
-
-{% block title %}{{ title }}{% endblock %}
-
-{% block body %}
-<article>
-    <h1>{{ title }}</h1>
-    <div class="content">
-        {{ content | safe }}
-    </div>
-</article>
+{% block title %}Danny Benish | {{ page_title }}{% endblock %}
+{% block content %}
+    <article>
+        <h1>{{ page_title }}</h1>
+        <div class="page-body">
+            {{ content | safe }}
+        </div>
+    </article>
 {% endblock %}
