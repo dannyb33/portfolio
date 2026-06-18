@@ -26,6 +26,9 @@ def build_site():
     for file in content_directory.rglob("*.md"):
         if file.name == "home.md":
             dest_file = output_directory / "index.html"
+        elif file.name == "projects.md":
+            dest_file = output_directory / "projects" / "index.html"
+            dest_file.parent.mkdir(parents=True, exist_ok=True)
         else:
             relative_path = file.relative_to(content_directory)
             dest_file = output_directory / relative_path.with_suffix("") / "index.html"

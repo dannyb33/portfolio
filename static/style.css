@@ -6,8 +6,9 @@
     --dusty-grape: #565676ff;
 
     --header-color: var(--rosewood);
-    --max-width: 800px;
+    --max-width: 850px;
     --header-max-width: 1000px;
+    overflow-y:scroll;;
 }
 
 body {
@@ -18,6 +19,8 @@ body {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
     background-color: white;
     max-width: var(--header-max-width);
     margin: 0 auto;
@@ -50,6 +53,7 @@ h1, h2, h3, h4, h5, h6 {
     font-style: italic;
     font-size: 1.1rem;
     padding-left: 15px;
+    color: var(--rosewood);
 }
 
 header nav ul li a {
@@ -58,34 +62,27 @@ header nav ul li a {
 }
 
 
-header {
-    max-width: var(--header-max-width);
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
 header nav ul {
     gap: 20px;
 }
 
 .top-accent {
+    width: 100%;
     height: 40px;
     background-color: var(--periwinkle-2);
 }
    
-
 main {
     max-width: var(--max-width);
     margin: 0 auto;
+    flex: 1;
 }
 
 article {
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 footer {
-    max-width: var(--header-max-width);
-    margin: 0 auto;
     text-align: right;
     padding-bottom: 10px;
     padding-right: 10px;
