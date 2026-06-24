@@ -12,13 +12,25 @@
 }
 
 body {
+    position: relative;
     font-family: "Lato", sans-serif;
     line-height: 1.6;
     margin: 0;
-    background-color: var(--periwinkle);
+    background-color: var(--dusty-grape);
+}
+
+.graphic {
+    position: fixed;   /* stays in place when scrolling */
+    inset: 0;
+    width: 100vw;      /* covers full viewport width */
+    height: 100vh;     /* covers full viewport height */
+    z-index: -1;       /* stays behind content layer */
+    background-color: var(--periwinkle); 
 }
 
 .container {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     background-color: white;

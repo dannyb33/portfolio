@@ -45,6 +45,8 @@ Who knows though maybe I'll be out of a job in 10 years and start busking for a 
 # this website
 This website's pages are written in Markdown, and built with a custom static site generator written in Python. It's still a work in progress, but I thought it'd be a fun project to do some simple web development without React, Angular, etc.
 
+The background of the site is written with ground-up WebGL2! I'm using it as an excuse to get more experience with graphics programming.
+
 Check out the [repository](https://github.com/dannyb33/portfolio)!
 
 
