@@ -9,7 +9,7 @@ cwd = Path(os.getcwd()).resolve()
 content_directory = Path(cwd / "site/content")
 template_directory = Path(cwd / "templates")
 static_directory = Path(cwd / "site/static")
-output_directory = Path(cwd / "dist")
+output_directory = Path(cwd.parent / "dist")
 
 class Page:
     def __init__(self, content, path, title="Untitled"):
