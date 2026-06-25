@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Danny Benish | {{ title }}{% endblock %}
+{% block content %}
+    <article>
+        <h1>{{ title }}</h1>
+        <div class="page-body">
+            {% for page in pages %}
+                <h2><a  href = "{{ page.path }}">{{ page.title }}</a></h2>
+            {% endfor %}
+        </div>
+    </article>
+{% endblock %}

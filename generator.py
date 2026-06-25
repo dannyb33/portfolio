@@ -6,10 +6,17 @@ import markdown
 import shutil
 
 cwd = Path(os.getcwd()).resolve()
-content_directory = Path(cwd / "content")
+content_directory = Path(cwd / "site/content")
 template_directory = Path(cwd / "templates")
-static_directory = Path(cwd / "static")
+static_directory = Path(cwd / "site/static")
 output_directory = Path(cwd / "dist")
+
+class Page:
+    def __init__(self, content, path, title="Untitled"):
+        self.title = title
+        self.content = content
+        self.path = path
+
 
 def build_site():
     copy_static()
@@ -21,28 +28,40 @@ def build_site():
         autoescape=True
     )
 
-    jinja_env.globals["today"] = datetime.now
+    posts = []
 
     for file in content_directory.rglob("*.md"):
+        md = file.read_text()
+
+        html = page_to_html(md)
+
+        relative_path = file.relative_to(content_directory)
+        print(relative_path)
+        
+        page = Page(html["content"], "/" + str(relative_path.with_suffix("")), html["page_title"])
+
         if file.name == "home.md":
             dest_file = output_directory / "index.html"
         elif file.name == "projects.md":
             dest_file = output_directory / "projects" / "index.html"
             dest_file.parent.mkdir(parents=True, exist_ok=True)
         else:
-            relative_path = file.relative_to(content_directory)
             dest_file = output_directory / relative_path.with_suffix("") / "index.html"
             dest_file.parent.mkdir(parents=True, exist_ok=True)
-
-        md = file.read_text()
-
-        page = build_page(md)
+            posts.append(page)
         
-        final_html = jinja_env.get_template("content_display.html").render(page)
+        final_html = jinja_env.get_template("content_display.html").render(page=page)
 
         dest_file.write_text(final_html, encoding="utf_8")
 
-def build_page(md_text):
+
+    list_html = jinja_env.get_template("list_display.html").render(pages=posts)
+
+    blog_index = output_directory / "blog" / "index.html"
+
+    blog_index.write_text(list_html, encoding="utf-8")
+
+def page_to_html(md_text):
     content_lines = md_text.split("\n")
     filtered_lines = []
     found_first_heading = False
