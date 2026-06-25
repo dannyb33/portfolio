@@ -5,13 +5,19 @@ var vertexShaderSource = `#version 300 es
 in vec2 a_position;
 
 uniform vec2 u_resolution;
+uniform vec2 u_speed;
+uniform float u_time;
 
 void main() {
     vec2 zeroToOne = a_position / u_resolution;
     vec2 zeroToTwo = zeroToOne * 2.0;
     vec2 clipSpace = zeroToTwo - 1.0;
 
-    gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+    float xOffset = sin(u_time * u_speed.x);
+
+    vec2 translated = clipSpace + vec2(xOffset, 0.0);
+
+    gl_Position = vec4(translated, 0.0, 1.0);
 }
 `;
 
@@ -55,6 +61,8 @@ function main() {
     var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
     var resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
     var colorLocation = gl.getUniformLocation(program, "u_color");
+    var speedLocation = gl.getUniformLocation(program, "u_speed")
+    var timeLocation = gl.getUniformLocation(program, "u_time");
 
     var positionBuffer = gl.createBuffer();
 
@@ -71,9 +79,43 @@ function main() {
     var offset = 0;        // start at the beginning of the buffer
     gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
 
-    render();
+    resizeCanvasToDisplaySize(gl.canvas);
 
-    function render() {
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+    var shapes = [];
+    var shapesToDraw = [];
+
+    for (var j = 0; j < 50; j++) {
+        var colorIndex = randomInt(0, colors.length - 1);
+        var translation = [];
+
+        const width = randomInt(300, 500);
+        const height = randomInt(300, 500);
+
+        console.log(gl.canvas.width);
+        console.log(gl.canvas.height);
+
+        const x = randomInt(0, Math.max(0, gl.canvas.width - width));
+        const y = randomInt(0, Math.max(0, gl.canvas.height - height));
+
+        const rectangle = getRectangle(x, y, width, height);
+        
+        var shape = {
+            translation: rectangle,
+            color: colors[colorIndex],
+            speed: [randomInt(-5, 5) || 1, randomInt(-5, 5) || 1]
+        };
+
+        console.log(shape)
+        shapes.push(shape);
+    }
+
+    requestAnimationFrame(render)
+
+    function render(time) {
+        time = time * 0.00005;
+
         resizeCanvasToDisplaySize(gl.canvas);
 
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -87,19 +129,29 @@ function main() {
 
         gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
 
-        for (var j = 0; j < 50; j++) {
-            setRectangle(gl, randomInt(0, gl.canvas.width), randomInt(0, gl.canvas.height), randomInt(300, 1000), randomInt(300, 1000));
-
-            var colorIndex = randomInt(0, colors.length - 1);
-            gl.uniform4f(colorLocation, colors[colorIndex][0], colors[colorIndex][1], colors[colorIndex][2], 1);
+        shapes.forEach(function(shape) {
+            gl.uniform4f(colorLocation, shape.color[0], shape.color[1], shape.color[2], 1);
+            gl.uniform2f(speedLocation, shape.speed[0], shape.speed[1]);
+            gl.uniform1f(timeLocation, time);
 
             var primitiveType = gl.TRIANGLES;
             var offset = 0;
             var count = 6;
-            gl.drawArrays(primitiveType, offset, count);
-        }
-    }
 
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                shape.translation.x1, shape.translation.y1,
+                shape.translation.x2, shape.translation.y1,
+                shape.translation.x1, shape.translation.y2,
+                shape.translation.x1, shape.translation.y2,
+                shape.translation.x2, shape.translation.y1,
+                shape.translation.x2, shape.translation.y2,
+            ]), gl.STATIC_DRAW);
+
+            gl.drawArrays(primitiveType, offset, count);
+        });
+
+        requestAnimationFrame(render);
+    }
 }
 
 main();

@@ -46,20 +46,14 @@ function createProgramFromSources(gl, shaderSources, types) {
     return createProgram(gl, shaders);
 }
 
-// Draw rectangle
-function setRectangle(gl, x, y, width, height) {
-  var x1 = x;
-  var x2 = x + width;
-  var y1 = y;
-  var y2 = y + height;
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-     x1, y1,
-     x2, y1,
-     x1, y2,
-     x1, y2,
-     x2, y1,
-     x2, y2,
-  ]), gl.STATIC_DRAW);
+// Calculate points of rectangle
+function getRectangle(x, y, width, height) {
+    return {
+        x1: x,
+        x2: x + width,
+        y1: y,
+        y2: y + height
+    };
 }
 
 // Fix canvas display sizing
