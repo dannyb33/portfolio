@@ -1,4 +1,4 @@
-# web graphics - 6/24/26
+# web graphics - 6.24.26
 
 First post here, hopefully going to keep myself more committed to making progress regularly. I've spent a couple days messing with WebGL2 to make this site's background a little more interesting. I've spent some time learning the basics of OpenGL before. A lot carried over, since they're based on the same foundations.
 
