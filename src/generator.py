@@ -12,10 +12,11 @@ static_directory = Path(cwd / "site/static")
 output_directory = Path(cwd.parent / "dist")
 
 class Page:
-    def __init__(self, content, path, title="Untitled"):
+    def __init__(self, content, path, title="Untitled", date = None):
         self.title = title
         self.content = content
         self.path = path
+        self.date = date
 
 
 def build_site():
@@ -48,14 +49,16 @@ def build_site():
         else:
             dest_file = output_directory / relative_path.with_suffix("") / "index.html"
             dest_file.parent.mkdir(parents=True, exist_ok=True)
+            page.date = page.title.split("- ")[-1]
             posts.append(page)
         
         final_html = jinja_env.get_template("content_display.html").render(page=page)
 
         dest_file.write_text(final_html, encoding="utf_8")
 
+    posts.sort(key=lambda post: post.date, reverse=True)
 
-    list_html = jinja_env.get_template("list_display.html").render(pages=posts)
+    list_html = jinja_env.get_template("list_display.html").render(pages=posts, title="blog")
 
     blog_index = output_directory / "blog" / "index.html"
 

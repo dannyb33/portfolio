@@ -46,6 +46,13 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 2.5rem;
 }
 
+h2 {
+    color: #54426B;
+    font-style: italic;
+    font-family: "Lato", sans-serif;
+    font-size: 1.5rem;
+}
+
 .logo-list {
     padding-top: 5px;
     display: flex;
