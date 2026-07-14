@@ -1,6 +1,6 @@
 # Personal Website
 
-This repository contains the content of my website, including my bio, projects, and blog.
+This repository contains the content of my website, including my bio, projects, and blog hosted at *[benish.dev](benish.dev)*
 
 In src/generator.py there is also a custom static site generator to build html pages from the markdown in src/site/content
 
